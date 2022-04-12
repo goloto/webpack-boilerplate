@@ -2,7 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+const isProduction = process.env.NODE_ENV === 'production';
+const mode = isProduction ? 'production' : 'development';
+const target = isProduction ? 'browserslist' : 'web';
 
 const plugins = [
   new HtmlWebpackPlugin({
@@ -16,6 +18,7 @@ const plugins = [
 module.exports = {
   mode,
   plugins,
+  target,
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
