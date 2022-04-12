@@ -21,7 +21,7 @@ module.exports = {
   target,
   entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
@@ -43,12 +43,30 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
-        type: mode === 'production' ? 'asset' : 'asset/resource',
+        type: isProduction ? 'asset' : 'asset/resource',
       },
       {
         test: /\.(woff2?|eot|ttf|otf)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.js$/,
+        exclude: /.yarn/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+          },
+        },
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /.yarn/,
+      },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 }
