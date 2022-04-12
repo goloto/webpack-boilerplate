@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
@@ -19,7 +20,7 @@ module.exports = {
   mode,
   plugins,
   target,
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, '../dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
@@ -50,7 +51,12 @@ module.exports = {
         type: 'asset/resource',
       },
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /.yarn/,
+      },
+      {
+        test: /\.jsx?$/,
         exclude: /.yarn/,
         use: {
           loader: 'babel-loader',
@@ -59,14 +65,17 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /.yarn/,
-      },
     ],
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    plugins: [
+      PnpWebpackPlugin,
+    ],
+  },
+  resolveLoader: {
+    plugins: [
+      PnpWebpackPlugin.moduleLoader(module),
+    ],
   },
 }
