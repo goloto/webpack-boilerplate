@@ -22,7 +22,7 @@ module.exports = {
   target,
   entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: path.resolve(__dirname, 'dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
@@ -65,6 +65,20 @@ module.exports = {
           },
         },
       },
+      // {
+      //   test: /\.(ts|js)x?$/,
+      //   exclude: /node_modules/,
+      //   use: {
+      //     loader: "babel-loader",
+      //     // options: {
+      //     //   presets: [
+      //     //     "@babel/preset-env",
+      //     //     "@babel/preset-react",
+      //     //     "@babel/preset-typescript",
+      //     //   ],
+      //     // },
+      //   },
+      // },
     ],
   },
   resolve: {

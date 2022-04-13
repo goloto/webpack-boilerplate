@@ -1,14 +1,29 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src/",
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "esnext",
     "target": "es5",
     "jsx": "react",
-    "allowJs": true,
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "types": ["react/next", "react-dom/next"]
   },
+  "include": [
+    "src"
+  ],
   "exclude": [
     "node_modules",
     ".yarn"

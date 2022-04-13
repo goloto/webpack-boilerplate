@@ -3,6 +3,6 @@ import { App } from './App';
 import React from 'react'
 
 const container = document.getElementById('app');
-const root = createRoot(container);
+const root = createRoot(container as HTMLDivElement);
 
-root.render(<App />);
+root.render(<App /> as React.ReactChild);
