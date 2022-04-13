@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
+const ESLintPlugin = require('eslint-webpack-plugin');
+const PrettierPlugin = require("prettier-webpack-plugin");
 
 const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
@@ -14,6 +16,8 @@ const plugins = [
   new MiniCssExtractPlugin({
     filename: '[name].[contenthash].css',
   }),
+  new ESLintPlugin(),
+  new PrettierPlugin()
 ];
 
 module.exports = {
@@ -22,7 +26,7 @@ module.exports = {
   target,
   entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '../dist'),
     assetModuleFilename: 'assets/[hash][ext][query]',
     clean: true,
   },
@@ -58,27 +62,13 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /.yarn/,
-        use: {
+        use: [{
           loader: 'babel-loader',
           options: {
             cacheDirectory: true,
           },
-        },
+        }, 'eslint-loader'],
       },
-      // {
-      //   test: /\.(ts|js)x?$/,
-      //   exclude: /node_modules/,
-      //   use: {
-      //     loader: "babel-loader",
-      //     // options: {
-      //     //   presets: [
-      //     //     "@babel/preset-env",
-      //     //     "@babel/preset-react",
-      //     //     "@babel/preset-typescript",
-      //     //   ],
-      //     // },
-      //   },
-      // },
     ],
   },
   resolve: {
