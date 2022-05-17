@@ -1,85 +1,16 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const PnpWebpackPlugin = require(`pnp-webpack-plugin`);
-const ESLintPlugin = require('eslint-webpack-plugin');
-const PrettierPlugin = require("prettier-webpack-plugin");
+const { merge } = require('webpack-merge');
 
-const isProduction = process.env.NODE_ENV === 'production';
-const mode = isProduction ? 'production' : 'development';
-const target = isProduction ? 'browserslist' : 'web';
+const developmentConfig = require('./webpack.development');
+const productionConfig = require('./webpack.production');
+const commonConfig = require('./webpack.common');
 
-const plugins = [
-  new HtmlWebpackPlugin({
-    template: './src/index.html',
-  }),
-  new MiniCssExtractPlugin({
-    filename: '[name].[contenthash].css',
-  }),
-  new ESLintPlugin(),
-  new PrettierPlugin()
-];
-
-module.exports = {
-  mode,
-  plugins,
-  target,
-  entry: './src/index.tsx',
-  output: {
-    path: path.resolve(__dirname, '../dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]',
-    clean: true,
-  },
-  devtool: 'source-map',
-  devServer: {
-    hot: true,
-  },
-  module: {
-    rules: [
-      { test: /\.(html)$/, use: ['html-loader'] },
-      {
-        test: /\.(s[ac]|c)ss$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg|webp|ico)$/i,
-        type: isProduction ? 'asset' : 'asset/resource',
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /.yarn/,
-      },
-      {
-        test: /\.jsx?$/,
-        exclude: /.yarn/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-          },
-        }, 'eslint-loader'],
-      },
-    ],
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    plugins: [
-      PnpWebpackPlugin,
-    ],
-  },
-  resolveLoader: {
-    plugins: [
-      PnpWebpackPlugin.moduleLoader(module),
-    ],
-  },
+module.exports = (env, args) => {
+  switch(args.mode) {
+    case 'development':
+      return merge(commonConfig, developmentConfig);
+    case 'production':
+      return merge(commonConfig, productionConfig);
+    default:
+      throw new Error('No matching configuration was found!');
+  }
 }
