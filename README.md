@@ -1,12 +1,36 @@
 # webpack-boilerplate
 
-## Requirements
+## Требования
 
 - [node.js](https://nodejs.org/en/download/) 16.4.1
-- *(optional)* [nvm](https://github.com/coreybutler/nvm-windows) - node.js version manager
+- *(опционально)* [nvm](https://github.com/coreybutler/nvm-windows) - node.js version manager
 
-## Available Scripts
+## Установка и запуск
 
-- `yarn install` - install project
-- `yarn start` - deploy project at http://localhost:3000/
-- `yarn build` - generate production build
+- `yarn install` - скачивание и установка зависимостей
+- `yarn start` - запуск и деплой проекта на http://localhost:3000/
+- `yarn build` - создание продакшен-билда
+
+## Правила именования
+
+* Все файлы по-умолчанию должны именоваться в *camelCase* за исключением React-компонентов и файлов, которые в своём названии привязываются к этому компоненту (например, `Component.util.ts`, `Component.hook.ts`, `Component.reducer.ts` и др.), их следует именовать в *PascalCase*
+* Имена файлов могут содержать расширения:
+    * `*.component.ts` - файл содержит компонент
+    * `*.type.ts` - файл содержит типы
+    * `*.model.ts` - файл содержит модели
+    * `*.constant.ts` - файл содержит константы
+    * `*.service.ts` - файл содержит API-сервисы
+    * `*.util.ts` - файл содержит утилиты
+    * `*.validator.ts` - файл содержит валидаторы форм
+    * `*.hook.ts` - файл содержит хуки
+    * `*.slice.ts` - файл содержит слайсы
+    * `*.reducer.ts` - файл содержит редьюсеры
+    * `*.action.ts` - файл содержит экшены
+    * `*.saga.ts` - файл содержит сагу
+    * `*.test.ts` - файл содержит тесты
+* Типы должны:
+    * начинаться с *T*, если используется `Type`, например, `TComponentProps`
+    * начинаться с *I*, если используется `Interface`, например, `IComponentProps`
+    * начинаться с *E*, если используется `enum`, например, `EForms`
+* Объекты-константы должны именоваться в *UPPER_CASE*
+* Функции, аргументы функций и переменные должны именоваться в *camelCase*
